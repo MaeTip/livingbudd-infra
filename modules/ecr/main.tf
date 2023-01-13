@@ -1,4 +1,4 @@
-# ecr.tf | Elastic Container Repository
+# Elastic Container Repository
 
 resource "aws_ecr_repository" "aws-ecr" {
   name = var.ecr_name

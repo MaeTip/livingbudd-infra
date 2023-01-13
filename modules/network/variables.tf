@@ -1,6 +1,6 @@
 variable "app_name" {
   type        = string
-  description = "Application Name"
+  description = "Application name"
 }
 
 variable "app_environment" {
@@ -8,9 +8,9 @@ variable "app_environment" {
   description = "Application Environment"
 }
 
-variable "certificate_arn" {
-  type = string
-  description = "certificate arn"
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID"
 }
 
 variable "public_subnets" {

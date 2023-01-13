@@ -1,11 +1,8 @@
-# aws_region        = "us-east-1"
-# aws_access_key    = "aws_access_key"
-# aws_secret_key    = "aws_secret_key"
-# aws_key_pair_name = "key-pair-name"
-
-# availability_zones = ["us-east-1a", "us-east-1b"]
-# public_subnets     = ["10.10.100.0/24", "10.10.101.0/24"]
-# private_subnets    = ["10.10.0.0/24", "10.10.1.0/24"]
-
 app_name        = "living-budd"
 app_environment = "production"
+
+availability_zones = [ "ap-southeast-1b",  "ap-southeast-1c"]
+public_subnets     = ["10.10.100.0/24", "10.10.101.0/24"]
+private_subnets    = ["10.10.0.0/24", "10.10.1.0/24"]
+
+certificate_arn = "arn:aws:acm:ap-southeast-1:312726873549:certificate/a1132ca4-7921-4e4f-b769-ed99f91de04b"
