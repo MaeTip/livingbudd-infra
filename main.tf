@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "ap-southeast-1"
+  region  = var.aws_region
 }
 
 module "ecr" {
@@ -56,5 +56,35 @@ module "alb" {
     certificate_arn = var.certificate_arn
 
     vpc_id = module.vpc.vpc_id
-    public_subnets = module.network.public_subnet_id
+    public_subnets_ids = module.network.public_subnet_ids
 }   
+
+module "ecs" {
+    source = "./modules/ecs"
+
+    app_name = var.app_name
+    app_environment = var.app_environment
+    aws_region = var.aws_region
+
+    vpc_id = module.vpc.vpc_id
+    repository_url = module.ecr.repository_url
+    ecs_task_role_arn = module.iam.iam_ecs_task_role_arn
+    private_subnet_ids = module.network.private_subnet_ids
+    load_balancer_security_group_id = module.alb.load_balancer_security_group_id
+    target_group_arn = module.alb.target_group_arn
+
+    depends_on = [
+      module.alb
+    ]
+}
+
+# module "autoscaling" {
+#     source = "./modules/autoscaling"
+
+#     app_name = var.app_name
+#     app_environment = var.app_environment
+    
+#     cluster_name = module.ecs.cluster_name
+#     service_name = module.ecs.service_name
+# }
+

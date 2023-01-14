@@ -8,6 +8,11 @@ variable "app_environment" {
   description = "Application Environment"
 }
 
+variable "aws_region" {
+  type        = string
+  description = "AWS Region"
+}
+
 variable "certificate_arn" {
   type = string
   description = "certificate arn"
