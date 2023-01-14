@@ -78,13 +78,12 @@ module "ecs" {
     ]
 }
 
-# module "autoscaling" {
-#     source = "./modules/autoscaling"
+module "autoscaling" {
+    source = "./modules/autoscaling"
 
-#     app_name = var.app_name
-#     app_environment = var.app_environment
+    app_name = var.app_name
+    app_environment = var.app_environment
     
-#     cluster_name = module.ecs.cluster_name
-#     service_name = module.ecs.service_name
-# }
-
+    cluster_name = module.ecs.cluster_name
+    service_name = module.ecs.service_name
+}
