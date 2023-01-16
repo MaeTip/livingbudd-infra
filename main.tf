@@ -87,3 +87,22 @@ module "autoscaling" {
     cluster_name = module.ecs.cluster_name
     service_name = module.ecs.service_name
 }
+
+module "rds" {
+    source = "./modules/rds"
+
+    app_name = var.app_name
+    app_environment = var.app_environment
+
+    vpc_id = module.vpc.vpc_id
+    private_subnet_ids = module.network.private_subnet_ids
+    load_balancer_security_group_id = module.alb.load_balancer_security_group_id
+
+    allocated_storage = var.rds_allocated_storage
+    instance_class = var.rds_instance_class
+    multi_az = var.rds_multi_az
+    identifier = var.rds_identifier
+    database_name = var.rds_database_name
+    database_username = var.rds_database_username
+    database_password = var.rds_database_password
+}

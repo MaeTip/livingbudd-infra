@@ -29,3 +29,42 @@ variable "private_subnets" {
 variable "availability_zones" {
   description = "List of availability zones"
 }
+
+## RDS
+variable "rds_identifier" {
+  type        = string
+  description = "RDS instant identifier"
+}
+
+variable "rds_instance_class" {
+  default = "db.t3.micro"
+  description = "The instance type"
+}
+
+variable "rds_allocated_storage" {
+  default     = "20"
+  description = "The storage size in GB"
+}
+
+variable "rds_multi_az" {
+  default     = false
+  description = "Muti-az allowed?"
+}
+
+variable "rds_database_name" {
+  type        = string
+  description = "The name of database"
+}
+
+variable "rds_database_username" {
+  type        = string
+  default     = "admin"
+  description = "The username of the database"
+}
+
+variable "rds_database_password" {
+  description = "The password of the database"
+  type        = string
+  sensitive   = true
+}
+

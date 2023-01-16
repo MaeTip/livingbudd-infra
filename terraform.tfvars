@@ -7,3 +7,6 @@ public_subnets     = ["10.10.100.0/24", "10.10.101.0/24"]
 private_subnets    = ["10.10.0.0/24", "10.10.1.0/24"]
 
 certificate_arn = "arn:aws:acm:ap-southeast-1:312726873549:certificate/a1132ca4-7921-4e4f-b769-ed99f91de04b"
+
+rds_identifier = "livingbudd"
+rds_database_name = "livingbudd"
