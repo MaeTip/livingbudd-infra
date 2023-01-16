@@ -14,7 +14,7 @@ variable "aws_region" {
 }
 
 variable "certificate_arn" {
-  type = string
+  type        = string
   description = "certificate arn"
 }
 
@@ -37,7 +37,7 @@ variable "rds_identifier" {
 }
 
 variable "rds_instance_class" {
-  default = "db.t3.micro"
+  default     = "db.t3.micro"
   description = "The instance type"
 }
 

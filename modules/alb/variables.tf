@@ -14,11 +14,11 @@ variable "vpc_id" {
 }
 
 variable "certificate_arn" {
-  type = string
+  type        = string
   description = "Certificate ARN"
 }
 
 variable "public_subnets_ids" {
-  type        =  list(string)
+  type        = list(string)
   description = "Public Subnet IDs"
 }

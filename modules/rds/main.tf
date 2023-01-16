@@ -1,18 +1,18 @@
 # Relational Database Service
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  name        = "${var.app_name}-${var.app_environment}-rds-subnet-group"
-  subnet_ids  = var.private_subnet_ids
+  name       = "${var.app_name}-${var.app_environment}-rds-subnet-group"
+  subnet_ids = var.private_subnet_ids
 
   tags = {
-    Name = "${var.app_name}-rds-subnet-group"
+    Name        = "${var.app_name}-rds-subnet-group"
     Environment = "${var.app_environment}"
   }
 }
 
 resource "aws_security_group" "rds_sg" {
-  name        = "${var.app_name}-${var.app_environment}-rds-sg"
-  vpc_id      = var.vpc_id
+  name   = "${var.app_name}-${var.app_environment}-rds-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port = 0
@@ -42,16 +42,16 @@ resource "aws_security_group" "rds_sg" {
 }
 
 resource "aws_db_instance" "rds" {
-  identifier        = var.identifier
-  allocated_storage = var.allocated_storage
-  engine            = "mysql"
-  engine_version    = "8.0"
-  instance_class    = var.instance_class
-  multi_az          = var.multi_az
-  db_name           = var.database_name
-  username          = var.database_username
+  identifier             = var.identifier
+  allocated_storage      = var.allocated_storage
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = var.instance_class
+  multi_az               = var.multi_az
+  db_name                = var.database_name
+  username               = var.database_username
   password               = var.database_password
-  db_subnet_group_name   = "${aws_db_subnet_group.rds_subnet_group.id}"
+  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.id
   vpc_security_group_ids = ["${aws_security_group.rds_sg.id}"]
   skip_final_snapshot    = true
 
