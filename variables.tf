@@ -79,3 +79,14 @@ variable "app_api_source_location" {
   description = "Location of the source code from git"
   type        = string
 }
+
+# Route53
+variable "route_zone_id" {
+  type        = string
+  description = "The ID of the hosted zone to contain this record"
+}
+
+variable "route_api_record_name" {
+  type        = string
+  description = "The name of the record for api sub domain"
+}

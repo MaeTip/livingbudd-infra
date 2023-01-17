@@ -144,3 +144,12 @@ module "ssm" {
   ]
 }
 
+module "route53" {
+  source = "./modules/route53"
+
+  zone_id = var.route_zone_id
+  record_name = var.route_api_record_name
+  
+  records = [ module.alb.load_balancer_dns_name ]
+}
+
