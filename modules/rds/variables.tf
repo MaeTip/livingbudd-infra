@@ -8,9 +8,9 @@ variable "app_environment" {
   description = "Application Environment"
 }
 
-variable "private_subnet_ids" {
+variable "public_subnet_ids" {
   type        = list(string)
-  description = "Private subnets for RDS instance"
+  description = "Public subnets for RDS instance"
 }
 
 variable "load_balancer_security_group_id" {

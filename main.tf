@@ -69,7 +69,7 @@ module "ecs" {
   vpc_id                          = module.vpc.vpc_id
   api_repository_url              = module.ecr_api.repository_url
   ecs_task_role_arn               = module.iam.iam_ecs_task_role_arn
-  private_subnet_ids              = module.network.private_subnet_ids
+  public_subnet_ids               = module.network.public_subnet_ids
   load_balancer_security_group_id = module.alb.load_balancer_security_group_id
   target_group_arn                = module.alb.target_group_arn
 
@@ -96,7 +96,7 @@ module "rds" {
   app_environment = var.app_environment
 
   vpc_id                          = module.vpc.vpc_id
-  private_subnet_ids              = module.network.private_subnet_ids
+  public_subnet_ids               = module.network.public_subnet_ids
   load_balancer_security_group_id = module.alb.load_balancer_security_group_id
 
   allocated_storage = var.rds_allocated_storage

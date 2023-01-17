@@ -2,12 +2,16 @@
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.app_name}-${var.app_environment}-rds-subnet-group"
-  subnet_ids = var.private_subnet_ids
+  subnet_ids = var.public_subnet_ids
 
   tags = {
     Name        = "${var.app_name}-rds-subnet-group"
     Environment = "${var.app_environment}"
   }
+}
+
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
 }
 
 resource "aws_security_group" "rds_sg" {
@@ -26,6 +30,14 @@ resource "aws_security_group" "rds_sg" {
     to_port         = 3306
     protocol        = "tcp"
     security_groups = ["${var.load_balancer_security_group_id}"]
+  }
+
+  ingress {
+    description = "Local IP to access rds"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
   }
 
   egress {
@@ -54,6 +66,7 @@ resource "aws_db_instance" "rds" {
   db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.id
   vpc_security_group_ids = ["${aws_security_group.rds_sg.id}"]
   skip_final_snapshot    = true
+  publicly_accessible    = true
 
   tags = {
     Name        = "${var.app_name}-rds"

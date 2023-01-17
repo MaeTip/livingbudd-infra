@@ -23,7 +23,7 @@ variable "api_repository_url" {
   description = "The URL of the repository"
 }
 
-variable "private_subnet_ids" {
+variable "public_subnet_ids" {
   type        = list(string)
   description = "Private Subnet IDs"
 }
