@@ -11,7 +11,7 @@ output "rds_username" {
 }
 
 output "rds_password" {
-  description = "The database password (this password may be old, because Terraform doesn't track it after initial creation)"
+  description = "The database password"
   value       = aws_db_instance.rds.password
   sensitive   = true
 }
@@ -19,4 +19,9 @@ output "rds_password" {
 output "rds_name" {
   description = "The database name"
   value       = aws_db_instance.rds.db_name
+}
+
+output "rds_endpoint" {
+  description = "The connection endpoint"
+  value       = aws_db_instance.rds.endpoint
 }

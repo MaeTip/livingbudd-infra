@@ -111,14 +111,33 @@ module "rds" {
   ]
 }
 
-module "codebuild" {
+module "codebuild-api" {
   source = "./modules/codebuild"
 
   app_name        = var.app_name
   app_environment = var.app_environment
 
-  iam_role_name   = "${var.app_name}-build-role"
-  project_name    = "${var.app_name}-build-${var.app_environment}"
+  iam_role_name   = "${var.app_name}-api-build-role-"
+  project_name    = "${var.app_name}-api-build-${var.app_environment}"
   build_timeout   = "20"
-  source_location = "https://github.com/MaeTip/livingbudd-api.git"
+  source_location = var.app_api_source_location
 }
+
+module "ssm" {
+  source = "./modules/ssm"
+
+  app_name        = var.app_name
+  app_environment = var.app_environment
+
+  database_host     = module.rds.rds_endpoint
+
+  database_name     = var.rds_database_name
+  database_username = var.rds_database_username
+  database_password = var.rds_database_password
+  app_jwt_secret    = var.app_jwt_secret
+
+  depends_on = [
+    module.rds
+  ]
+}
+

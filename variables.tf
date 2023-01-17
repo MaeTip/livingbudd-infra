@@ -8,6 +8,12 @@ variable "app_environment" {
   description = "Application Environment"
 }
 
+variable "app_jwt_secret" {
+  description = "The JWT secret of app"
+  type        = string
+  sensitive   = true
+}
+
 variable "aws_region" {
   type        = string
   description = "AWS Region"
@@ -30,7 +36,7 @@ variable "availability_zones" {
   description = "List of availability zones"
 }
 
-## RDS
+# RDS
 variable "rds_identifier" {
   type        = string
   description = "RDS instant identifier"
@@ -68,3 +74,8 @@ variable "rds_database_password" {
   sensitive   = true
 }
 
+# Codebuild
+variable "app_api_source_location" {
+  description = "Location of the source code from git"
+  type        = string
+}
