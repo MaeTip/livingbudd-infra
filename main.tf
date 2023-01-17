@@ -13,11 +13,11 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "ecr" {
+module "ecr_api" {
   source = "./modules/ecr"
 
-  ecr_name        = "${var.app_name}-${var.app_environment}"
-  tag_name        = "${var.app_name}-ecr"
+  ecr_name        = "${var.app_name}-api"
+  tag_name        = "${var.app_name}-ecr-api"
   tag_environment = var.app_environment
 }
 
@@ -67,14 +67,15 @@ module "ecs" {
   aws_region      = var.aws_region
 
   vpc_id                          = module.vpc.vpc_id
-  repository_url                  = module.ecr.repository_url
+  api_repository_url              = module.ecr_api.repository_url
   ecs_task_role_arn               = module.iam.iam_ecs_task_role_arn
   private_subnet_ids              = module.network.private_subnet_ids
   load_balancer_security_group_id = module.alb.load_balancer_security_group_id
   target_group_arn                = module.alb.target_group_arn
 
   depends_on = [
-    module.alb
+    module.alb,
+    module.ecr_api
   ]
 }
 
@@ -111,13 +112,13 @@ module "rds" {
   ]
 }
 
-module "codebuild-api" {
+module "codebuild_api" {
   source = "./modules/codebuild"
 
   app_name        = var.app_name
   app_environment = var.app_environment
 
-  iam_role_name   = "${var.app_name}-api-build-role-"
+  iam_role_name   = "${var.app_name}-api-build-role"
   project_name    = "${var.app_name}-api-build-${var.app_environment}"
   build_timeout   = "20"
   source_location = var.app_api_source_location
@@ -129,7 +130,8 @@ module "ssm" {
   app_name        = var.app_name
   app_environment = var.app_environment
 
-  database_host     = module.rds.rds_endpoint
+  database_host = module.rds.rds_endpoint
+  iam_role_name = module.iam.iam_ecs_task_role_name
 
   database_name     = var.rds_database_name
   database_username = var.rds_database_username
@@ -137,7 +139,8 @@ module "ssm" {
   app_jwt_secret    = var.app_jwt_secret
 
   depends_on = [
-    module.rds
+    module.rds,
+    module.iam
   ]
 }
 

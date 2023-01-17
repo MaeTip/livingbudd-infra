@@ -52,3 +52,29 @@ resource "aws_ssm_parameter" "app_jwt_secret" {
     Environment = var.app_environment
   }
 }
+
+resource "aws_iam_role_policy" "role_policy" {
+  role = var.iam_role_name
+  name = "${var.app_name}-ssm-access"
+
+  policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Effect" : "Allow",
+          "Resource" : [
+            "${aws_ssm_parameter.db_host.*.arn[0]}",
+            "${aws_ssm_parameter.db_username.*.arn[0]}",
+            "${aws_ssm_parameter.db_password.*.arn[0]}",
+            "${aws_ssm_parameter.db_name.*.arn[0]}",
+            "${aws_ssm_parameter.app_jwt_secret.*.arn[0]}"
+          ]
+          "Action" : [
+            "ssm:GetParameters"
+          ],
+        }
+      ]
+    }
+  )
+}

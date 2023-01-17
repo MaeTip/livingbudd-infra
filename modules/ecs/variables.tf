@@ -18,7 +18,7 @@ variable "ecs_task_role_arn" {
   description = "Role for execution task definition"
 }
 
-variable "repository_url" {
+variable "api_repository_url" {
   type        = string
   description = "The URL of the repository"
 }

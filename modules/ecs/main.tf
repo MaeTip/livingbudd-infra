@@ -21,14 +21,14 @@ data "template_file" "env_vars" {
   template = file("${path.module}/env_vars.json")
 }
 
-resource "aws_ecs_task_definition" "aws-ecs-task" {
-  family = "${var.app_name}-task"
+resource "aws_ecs_task_definition" "aws-ecs-api-task" {
+  family = "${var.app_name}-api"
 
   container_definitions = jsonencode(
     [
       {
-        "name" : "${var.app_name}-${var.app_environment}-container",
-        "image" : "${var.repository_url}:latest",
+        "name" : "${var.app_name}-api-${var.app_environment}-container",
+        "image" : "${var.api_repository_url}:latest",
         "entryPoint" : [],
         "environment" : [
           { "name" : "environment", "value" : "${data.template_file.env_vars.rendered}" }
@@ -71,13 +71,13 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
 }
 
 data "aws_ecs_task_definition" "main" {
-  task_definition = aws_ecs_task_definition.aws-ecs-task.family
+  task_definition = aws_ecs_task_definition.aws-ecs-api-task.family
 }
 
-resource "aws_ecs_service" "aws-ecs-service" {
-  name                 = "${var.app_name}-${var.app_environment}-ecs-service"
+resource "aws_ecs_service" "aws-ecs-api-service" {
+  name                 = "${var.app_name}-api-${var.app_environment}-ecs-service"
   cluster              = aws_ecs_cluster.aws-ecs-cluster.id
-  task_definition      = "${aws_ecs_task_definition.aws-ecs-task.family}:${max(aws_ecs_task_definition.aws-ecs-task.revision, data.aws_ecs_task_definition.main.revision)}"
+  task_definition      = "${aws_ecs_task_definition.aws-ecs-api-task.family}:${max(aws_ecs_task_definition.aws-ecs-api-task.revision, data.aws_ecs_task_definition.main.revision)}"
   launch_type          = "FARGATE"
   scheduling_strategy  = "REPLICA"
   desired_count        = 1
@@ -94,7 +94,7 @@ resource "aws_ecs_service" "aws-ecs-service" {
 
   load_balancer {
     target_group_arn = var.target_group_arn
-    container_name   = "${var.app_name}-${var.app_environment}-container"
+    container_name   = "${var.app_name}-api-${var.app_environment}-container"
     container_port   = 8080
   }
 }
