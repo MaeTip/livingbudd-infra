@@ -140,6 +140,7 @@ module "codebuild_web" {
   env_vars = {
     DISTRIBUTION_ID = var.app_web_distribution
     BUCKET_NAME     = var.app_web_s3_bucket_name
+    API_ENDPOINT    = var.app_web_api_endpoint
   }
 }
 
