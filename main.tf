@@ -136,6 +136,7 @@ module "codebuild_web" {
   source_location     = var.app_web_source_location
   is_access_s3_bucket = true
   s3_bucket_name      = var.app_web_s3_bucket_name
+  distribution_arn   = var.app_web_distribution_arn
 
   env_vars = {
     DISTRIBUTION_ID = var.app_web_distribution

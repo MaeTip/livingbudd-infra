@@ -40,6 +40,12 @@ variable "s3_bucket_name" {
   default     = ""
 }
 
+variable "distribution_arn" {
+  type        = string
+  description = "Distribution ARN"
+  default     = ""
+}
+
 variable "env_vars" {
   type        = map
   description = "Environment for Codebuild"

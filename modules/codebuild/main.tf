@@ -64,6 +64,13 @@ resource "aws_iam_role_policy" "role_s3_access_policy" {
           "Effect" : "Allow",
           "Action": "*",
           "Resource": "arn:aws:s3:::${var.s3_bucket_name}/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:CreateInvalidation"
+            ],
+            "Resource": var.distribution_arn
         }
       ]
     }

@@ -93,6 +93,14 @@ variable "app_web_distribution" {
   description = "distribution"
   type        = string
 }
+variable "app_web_distribution_arn" {
+  description = "distribution arn"
+  type        = string
+}
+variable "app_web_api_endpoint" {
+  description = "endpoint of api"
+  type        = string
+}
 
 # Route53
 variable "route_zone_id" {
