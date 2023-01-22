@@ -52,6 +52,24 @@ resource "aws_iam_role_policy" "role_policy" {
   )
 }
 
+resource "aws_iam_role_policy" "role_s3_access_policy" {
+  count = var.is_access_s3_bucket ? 1 : 0
+  role = aws_iam_role.iam_role.name
+
+  policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Effect" : "Allow",
+          "Action": "*",
+          "Resource": "arn:aws:s3:::${var.s3_bucket_name}/*"
+        }
+      ]
+    }
+  )
+}
+
 resource "aws_codebuild_project" "codebuild_project" {
   name          = var.project_name
   build_timeout = var.build_timeout

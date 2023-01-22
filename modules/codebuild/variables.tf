@@ -27,3 +27,15 @@ variable "source_location" {
   type        = string
   description = "Location of the source code from git"
 }
+
+variable "is_access_s3_bucket" {
+  type        = bool
+  description = "Is access S3 Bucket for IAM to access"
+  default     = false
+}
+
+variable "s3_bucket_name" {
+  type        = string
+  description = "S3 Bucket for IAM to access"
+  default     = ""
+}

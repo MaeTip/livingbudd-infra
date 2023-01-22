@@ -74,9 +74,19 @@ variable "rds_database_password" {
   sensitive   = true
 }
 
-# Codebuild
+# Codebuild API
 variable "app_api_source_location" {
-  description = "Location of the source code from git"
+  description = "Location of the source code from git for API"
+  type        = string
+}
+
+# Codebuild Web
+variable "app_web_source_location" {
+  description = "Location of the source code from git for Web"
+  type        = string
+}
+variable "app_web_s3_bucket_name" {
+  description = "S3 Bucket for IAM to access"
   type        = string
 }
 

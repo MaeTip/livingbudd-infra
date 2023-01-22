@@ -124,12 +124,26 @@ module "codebuild_api" {
   source_location = var.app_api_source_location
 }
 
-module "ssm" {
-  source = "./modules/ssm"
+module "codebuild_web" {
+  source = "./modules/codebuild"
 
   app_name        = var.app_name
   app_environment = var.app_environment
 
+  iam_role_name       = "${var.app_name}-web-build-role"
+  project_name        = "${var.app_name}-web-build-${var.app_environment}"
+  build_timeout       = "20"
+  source_location     = var.app_web_source_location
+  is_access_s3_bucket = true
+  s3_bucket_name      = var.app_web_s3_bucket_name
+}
+
+module "ssm" {
+  source = "./modules/ssm"
+
+  app_name = var.app_name
+  app_environment = var.app_environment
+  
   database_host = module.rds.rds_endpoint
   iam_role_name = module.iam.iam_ecs_task_role_name
 
@@ -147,9 +161,9 @@ module "ssm" {
 module "route53" {
   source = "./modules/route53"
 
-  zone_id = var.route_zone_id
+  zone_id     = var.route_zone_id
   record_name = var.route_api_record_name
 
-  records = [ module.alb.load_balancer_dns_name ]
+  records = [module.alb.load_balancer_dns_name]
 }
 
