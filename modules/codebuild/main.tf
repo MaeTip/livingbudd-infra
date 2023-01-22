@@ -85,6 +85,14 @@ resource "aws_codebuild_project" "codebuild_project" {
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
+
+    dynamic "environment_variable" {
+      for_each = var.env_vars
+      content {
+        name  = environment_variable.key
+        value = environment_variable.value
+      }
+    }
   }
 
   logs_config {

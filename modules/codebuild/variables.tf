@@ -39,3 +39,9 @@ variable "s3_bucket_name" {
   description = "S3 Bucket for IAM to access"
   default     = ""
 }
+
+variable "env_vars" {
+  type        = map
+  description = "Environment for Codebuild"
+  default = {}
+} 

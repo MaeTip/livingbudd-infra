@@ -89,6 +89,10 @@ variable "app_web_s3_bucket_name" {
   description = "S3 Bucket for IAM to access"
   type        = string
 }
+variable "app_web_distribution" {
+  description = "distribution"
+  type        = string
+}
 
 # Route53
 variable "route_zone_id" {

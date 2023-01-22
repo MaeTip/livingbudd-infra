@@ -136,14 +136,19 @@ module "codebuild_web" {
   source_location     = var.app_web_source_location
   is_access_s3_bucket = true
   s3_bucket_name      = var.app_web_s3_bucket_name
+
+  env_vars = {
+    DISTRIBUTION_ID = var.app_web_distribution
+    BUCKET_NAME     = var.app_web_s3_bucket_name
+  }
 }
 
 module "ssm" {
   source = "./modules/ssm"
 
-  app_name = var.app_name
+  app_name        = var.app_name
   app_environment = var.app_environment
-  
+
   database_host = module.rds.rds_endpoint
   iam_role_name = module.iam.iam_ecs_task_role_name
 
