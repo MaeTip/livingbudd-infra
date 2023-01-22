@@ -136,12 +136,12 @@ module "codebuild_web" {
   source_location     = var.app_web_source_location
   is_access_s3_bucket = true
   s3_bucket_name      = var.app_web_s3_bucket_name
-  distribution_arn   = var.app_web_distribution_arn
+  distribution_arn    = var.app_web_distribution_arn
 
   env_vars = {
-    DISTRIBUTION_ID = var.app_web_distribution
-    BUCKET_NAME     = var.app_web_s3_bucket_name
-    API_ENDPOINT    = var.app_web_api_endpoint
+    DISTRIBUTION_ID        = var.app_web_distribution
+    BUCKET_NAME            = var.app_web_s3_bucket_name
+    REACT_APP_API_ENDPOINT = var.app_web_api_endpoint
   }
 }
 
