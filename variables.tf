@@ -14,6 +14,28 @@ variable "app_jwt_secret" {
   sensitive   = true
 }
 
+variable "app_api_smtp_username" {
+  description = "smtp username"
+  type        = string
+  sensitive   = true
+}
+
+variable "app_api_smtp_password" {
+  description = "smtp password"
+  type        = string
+  sensitive   = true
+}
+
+variable "app_api_smtp_default_receiver" {
+  description = "SMTP default receivers"
+  type        = string
+}
+
+variable "app_api_smtp_default_sender" {
+  description = "SMTP default sender"
+  type        = string
+}
+
 variable "aws_region" {
   type        = string
   description = "AWS Region"

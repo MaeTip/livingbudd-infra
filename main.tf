@@ -159,6 +159,11 @@ module "ssm" {
   database_password = var.rds_database_password
   app_jwt_secret    = var.app_jwt_secret
 
+  app_smtp_username = var.app_api_smtp_username
+  app_smtp_password = var.app_api_smtp_password
+  app_smtp_default_receiver = var.app_api_smtp_default_receiver
+  app_smtp_default_sender = var.app_api_smtp_default_sender
+
   depends_on = [
     module.rds,
     module.iam
