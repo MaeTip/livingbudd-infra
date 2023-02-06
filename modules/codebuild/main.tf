@@ -119,7 +119,7 @@ resource "aws_codebuild_project" "codebuild_project" {
     }
   }
 
-  source_version = "/develop"
+  source_version = "refs/heads/develop"
 
   tags = {
     Name        = "${var.app_name}-codebuild"
