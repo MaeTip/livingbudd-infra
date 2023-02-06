@@ -136,5 +136,10 @@ resource "aws_codebuild_webhook" "codebuild_webhook" {
       type    = "EVENT"
       pattern = "PUSH"
     }
+
+    filter {
+      type    = "HEAD_REF"
+      pattern = "develop"
+    }
   }
 }
